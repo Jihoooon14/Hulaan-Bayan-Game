@@ -12,7 +12,8 @@ The browser edition adapts the same vocabulary and rules to JavaScript for phone
 
 Project address: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 
-Direct play / poster QR address: https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
+Android APK / poster QR address: https://www.mediafire.com/folder/ajswfy3fwo2i0/PERYA+KNIGHTS
+Direct browser play address: https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
 
 ## Browser development
 

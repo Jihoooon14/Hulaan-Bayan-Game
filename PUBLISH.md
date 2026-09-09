@@ -2,7 +2,8 @@
 
 Target repository: https://github.com/Jihoooon14/Hulaan-Bayan-Game
 
-Play address: https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
+Browser play address: https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
+Android APK / QR download folder: https://www.mediafire.com/folder/ajswfy3fwo2i0/PERYA+KNIGHTS
 
 The browser game runs as static HTML, CSS, and JavaScript. No server, build service, or Python installation is needed to play it.
 
@@ -21,6 +22,6 @@ The website archive includes the updated QR SVG, printable PDF/PNG, and the Pyth
 
 The workspace remote is `https://github.com/Jihoooon14/Hulaan-Bayan-Game`.
 Publish to its existing `main` branch and retain the existing GitHub Pages configuration.
-The QR points directly to `https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html`.
+The QR points to the MediaFire folder so Android users can download and install the APK. Upload the final Hulaan Bayan `.apk` to that folder before publishing the poster.
 
 Open `play.html` for a local preview before publishing.
