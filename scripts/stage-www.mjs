@@ -83,14 +83,19 @@ const REWRITES = [
   ],
 
   // --- Downloads ----------------------------------------------------------
+  // Hulaan-Bayan-Android.apk is this very app. Inside the APK the link is not
+  // for installing — it is how a player hands the game to a classmate, which is
+  // also why it must resolve to the published copy rather than a bundled file.
   // A relative <a href> to a bundled file does not trigger Android's download
   // manager under Capacitor's scheme, so these would be dead inside the app
   // whether or not downloads/ were bundled. Sending them to the published site
   // instead makes them work: Capacitor's shouldOverrideUrlLoading fires an
   // ACTION_VIEW intent for http(s) URLs outside the app's scope, so they open in
   // the system browser and download normally. No Capacitor plugin is involved.
-  download('index.html', 'Hulaan-Bayan-Game.zip', 2),
-  download('about.html', 'Hulaan-Bayan-Game.zip', 2),
+  download('index.html', 'Hulaan-Bayan-Android.apk', 1),
+  download('index.html', 'Hulaan-Bayan-Game.zip', 1),
+  download('about.html', 'Hulaan-Bayan-Android.apk', 1),
+  download('about.html', 'Hulaan-Bayan-Game.zip', 1),
   download('about.html', 'Hulaan-Bayan-Poster.pdf', 1),
   download('poster.html', 'Hulaan-Bayan-Poster.pdf', 1),
   download('poster.html', 'Hulaan-Bayan-Poster.png', 1),
