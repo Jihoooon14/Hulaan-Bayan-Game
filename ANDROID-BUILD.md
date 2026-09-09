@@ -74,8 +74,10 @@ game.
 
 A relative `<a href="downloads/...">` does not trigger Android's download manager
 under Capacitor's scheme, so those links are dead inside a WebView whether or not
-the files are bundled. All five are rewritten to absolute
-`https://jihoooon14.github.io/Hulaan-Bayan-Game/downloads/...` URLs.
+the files are bundled. Every one of them is rewritten to its absolute equivalent
+under the canonical origin (§3.3). The exact set is established by running the
+staging script rather than by reading, because each rewrite asserts its expected
+occurrence count and fails the build on a mismatch.
 
 Capacitor's `shouldOverrideUrlLoading` fires an `ACTION_VIEW` intent for http(s)
 URLs outside the app's scope, so they open in the system browser and download
@@ -85,16 +87,49 @@ normally. This needs no Capacitor plugin — the app has **zero** native plugins
 direction, to a relative `index.html`, so tapping it does not eject the user to
 the website to play a game they already have installed.
 
-### 3.3 What is left out
+### 3.3 The canonical origin, and the QR code
+
+Two things need an absolute URL and must never disagree: the QR code — scanned
+off a screen or a printed poster, where nothing relative can resolve — and the
+download links inside the APK. Both read `SITE_BASE` from **`scripts/site.mjs`**,
+the only place the published address is written down.
+
+Everything else on the site stays relative, which is why the pages work
+unmodified from whichever origin serves them. `scripts/site.mjs` also lists the
+origins the project is published from; the first is canonical.
+
+Point the build at a different origin for one run, without editing anything:
+
+```bash
+HULAAN_SITE_BASE=https://example.github.io/Hulaan-Bayan-Game just release
+```
+
+Change it permanently by editing `ORIGINS` in `scripts/site.mjs`, then regenerate
+the QR, which encodes the same base:
+
+```bash
+node scripts/generate-qr.mjs
+```
+
+`assets/project-qr.svg` encodes the **APK download URL**, so scanning it starts
+the download instead of landing on a page that then has to be navigated. It has a
+committed generator because a QR is the one asset nobody can check by looking at
+it: a changed URL and a stale QR are indistinguishable until someone scans it.
+The script verifies its own output by re-encoding and comparing.
+
+`downloads/Hulaan-Bayan-Poster.pdf` and `.png` still carry the old play-page QR
+and are deliberately left to drift; regenerating those exports is separate work.
+
+### 3.4 What is left out
 
 | Excluded | Size | Reason |
 |---|---|---|
-| `assets/bayan-theme.wav` | 1.01 MB | Superseded by `bayan-theme.m4a` (§3.4). Kept in the repository because the Python desktop game needs PCM for `winsound`, but no page loads it. |
+| `assets/bayan-theme.wav` | 1.01 MB | Superseded by `bayan-theme.m4a` (§3.5). Kept in the repository because the Python desktop game needs PCM for `winsound`, but no page loads it. |
 | `downloads/` | 9.2 MB | Cannot work as relative links (§3.2). `Hulaan-Bayan-Website.zip` is not linked from anywhere at all. |
 
 Bundled payload: **~1.44 MB**, down from ~11.5 MB.
 
-### 3.4 Sound and background music
+### 3.5 Sound and background music
 
 Both work fully offline; nothing is streamed.
 

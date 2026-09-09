@@ -24,12 +24,17 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SITE_BASE } from './site.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WWW = join(ROOT, 'www');
 
-/** Where the real downloads live, since they cannot be served from inside the APK. */
-const PAGES_BASE = 'https://jihoooon14.github.io/Hulaan-Bayan-Game';
+/**
+ * Where the real downloads live, since they cannot be served from inside the APK.
+ * Defined once in scripts/site.mjs alongside the URL the QR encodes, so the two
+ * cannot drift apart, and overridable per build via HULAAN_SITE_BASE.
+ */
+const PAGES_BASE = SITE_BASE;
 
 /**
  * Assets deliberately left out.
@@ -95,7 +100,6 @@ const REWRITES = [
   download('index.html', 'Hulaan-Bayan-Android.apk', 1),
   download('index.html', 'Hulaan-Bayan-Game.zip', 1),
   download('about.html', 'Hulaan-Bayan-Android.apk', 1),
-  download('about.html', 'Hulaan-Bayan-Game.zip', 1),
   download('about.html', 'Hulaan-Bayan-Poster.pdf', 1),
   download('poster.html', 'Hulaan-Bayan-Poster.pdf', 1),
   download('poster.html', 'Hulaan-Bayan-Poster.png', 1),

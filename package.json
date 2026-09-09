@@ -12,6 +12,7 @@
     "@capacitor/core": "8.5.1"
   },
   "devDependencies": {
-    "@capacitor/cli": "8.5.1"
+    "@capacitor/cli": "8.5.1",
+    "qrcode": "^1.5.4"
   }
 }

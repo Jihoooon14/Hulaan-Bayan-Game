@@ -19,7 +19,6 @@ section{scroll-margin-top:24px}h2{font-size:36px}.card{padding:28px;border-color
 .gallery-frame{padding:14px;background:#10294a;border:1px solid #365675;border-radius:18px}
 .gallery-frame figcaption{padding:2px 8px;font-size:14px}
 summary{padding:14px 18px;border:1px solid #365675;border-radius:8px;background:#10294a}
-.download{border:1px solid #49647f;background:linear-gradient(120deg,#173d65,#10294a)}
 .credits h2{font-size:32px}.team{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;list-style:none;padding:0;margin:22px 0;font-size:18px;font-weight:650}
 .credits>div:first-child{min-width:0}.credits .note a{overflow-wrap:anywhere}
 .scan-card{align-self:flex-start;min-width:180px;text-align:center;background:#10294a;padding:20px;border:1px solid #365675;border-radius:14px}
