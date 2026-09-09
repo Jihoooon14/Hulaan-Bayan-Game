@@ -18,7 +18,7 @@ No external pip packages are required by the game.
 On Linux, your distribution may require a separate python3-tk package.
 This Python desktop edition does not run inside a web browser.
 A browser adaptation is available at:
-https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/play.html
+https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
 Recommended display: 1280 x 800 or larger, at standard display scaling.
 
 HOW TO PLAY
@@ -42,7 +42,7 @@ Names: Ashley Glitz Jaranilla; Qwyncy Eloise Caritativo; Margie Murcilla; Jaygun
 Course: BSIT
 Section: 1A
 School: St. Francis Xavier College
-Project page: https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/
+Project page: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 
 SOURCE AND AUTHORSHIP
 The supplied source identifies GROUP 5 Advanced Hangman as its starting point.

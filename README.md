@@ -10,9 +10,9 @@ The browser edition adapts the same vocabulary and rules to JavaScript for phone
 - Run `game/Hulaan-Bayan-Game/Start-Game.cmd` on Windows with Python 3 and Tkinter installed.
 - The downloadable game is packaged in `downloads/Hulaan-Bayan-Game.zip`. Its editable source and bundled assets are in `game/Hulaan-Bayan-Game/`.
 
-Project address: https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/
+Project address: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 
-Direct play / poster QR address: https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/play.html
+Direct play / poster QR address: https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
 
 ## Browser development
 
@@ -64,7 +64,7 @@ Names: Ashley Glitz Jaranilla; Qwyncy Eloise Caritativo; Margie Murcilla; Jaygun
 Course: BSIT
 Section: 1A
 School: St. Francis Xavier College
-Project page: https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/
+Project page: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 
 SOURCE AND AUTHORSHIP
 The supplied source identifies GROUP 5 Advanced Hangman as its starting point.
