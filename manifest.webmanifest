@@ -1,0 +1,19 @@
+{
+  "name": "Hulaan Bayan",
+  "short_name": "Hulaan Bayan",
+  "description": "A Filipino word challenge based on Hangman.",
+  "start_url": "play.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#071426",
+  "theme_color": "#071426",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
