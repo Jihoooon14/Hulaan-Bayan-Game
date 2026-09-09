@@ -1,1 +1,4 @@
 .vs/
+.preview-tools/
+.previews/
+__pycache__/

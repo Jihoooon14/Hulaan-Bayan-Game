@@ -1,0 +1,28 @@
+/* Presentation polish shared by the public landing page. */
+body{background:radial-gradient(ellipse at 90% 0%,#17375a 0,transparent 38%),var(--navy)}
+header{background:#071426e8;border-top:4px solid var(--gold)}
+.brand{display:flex;align-items:center;gap:10px;letter-spacing:1.5px}
+.brand img{width:38px;height:38px;border-radius:50%}
+.brand span{margin-left:-5px}
+.links a{padding:10px 0}.links a:hover{color:var(--gold)}
+.hero{gap:48px;padding:64px 0}.hero>div{min-width:0}
+h1{font-size:clamp(48px,6.2vw,76px);line-height:1.06;letter-spacing:-3px}
+.hero img{box-shadow:12px 12px 0 #17365a;border:1px solid #496078;border-radius:24px}
+.eyebrow{letter-spacing:2px}.lead{font-size:20px;line-height:1.6}
+.button{min-height:48px;align-items:center;justify-content:center;transition:background .15s,transform .15s}
+.button:hover{background:#ffe66f;transform:translateY(-2px)}.secondary:hover{background:#183759}
+.ribbon{background:#10294a80;border-radius:12px;padding:24px;text-align:center}
+.ribbon>div+div{border-left:1px solid #37506a}.ribbon strong{font-size:26px}
+section{scroll-margin-top:24px}h2{font-size:36px}.card{padding:28px;border-color:#365675}
+.card h3{font-size:21px}.card p:last-child{margin-bottom:0}
+.tag{background:#10294a;font-size:14px;padding:8px 14px}
+.gallery-frame{padding:14px;background:#10294a;border:1px solid #365675;border-radius:18px}
+.gallery-frame figcaption{padding:2px 8px;font-size:14px}
+summary{padding:14px 18px;border:1px solid #365675;border-radius:8px;background:#10294a}
+.download{border:1px solid #49647f;background:linear-gradient(120deg,#173d65,#10294a)}
+.credits h2{font-size:32px}.team{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;list-style:none;padding:0;margin:22px 0;font-size:18px;font-weight:650}
+.credits>div:first-child{min-width:0}.credits .note a{overflow-wrap:anywhere}
+.scan-card{align-self:flex-start;min-width:180px;text-align:center;background:#10294a;padding:20px;border:1px solid #365675;border-radius:14px}
+.scan-card p{margin:10px 0 0;font-size:14px;font-weight:700}.qr{width:144px;border-radius:6px}
+@media(max-width:720px){nav{flex-wrap:wrap;gap:8px}.links{width:100%;justify-content:space-between}.hero{padding:36px 0;gap:28px}h1{font-size:clamp(42px,10vw,64px);letter-spacing:-2px}.hero img{max-width:260px}.ribbon{padding:18px 10px;gap:10px}.ribbon strong{font-size:19px}.ribbon span{font-size:12px}.ribbon>div+div{padding-left:8px}h2{font-size:30px}.team{grid-template-columns:1fr}.gallery-frame{padding:7px}.scan-card{align-self:center}.credits h2{font-size:30px}}
+@media(prefers-reduced-motion:reduce){.button{transition:none}.button:hover{transform:none}}
