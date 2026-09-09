@@ -26,3 +26,23 @@ summary{padding:14px 18px;border:1px solid #365675;border-radius:8px;background:
 .scan-card p{margin:10px 0 0;font-size:14px;font-weight:700}.qr{width:144px;border-radius:6px}
 @media(max-width:720px){nav{flex-wrap:wrap;gap:8px}.links{width:100%;justify-content:space-between}.hero{padding:36px 0;gap:28px}h1{font-size:clamp(42px,10vw,64px);letter-spacing:-2px}.hero img{max-width:260px}.ribbon{padding:18px 10px;gap:10px}.ribbon strong{font-size:19px}.ribbon span{font-size:12px}.ribbon>div+div{padding-left:8px}h2{font-size:30px}.team{grid-template-columns:1fr}.gallery-frame{padding:7px}.scan-card{align-self:center}.credits h2{font-size:30px}}
 @media(prefers-reduced-motion:reduce){.button{transition:none}.button:hover{transform:none}}
+
+/* Developer cards keep every team member equally prominent. */
+#developers{border-top:1px solid #294b71;margin-top:16px}
+.team-heading{display:flex;justify-content:space-between;align-items:center;gap:28px;margin-bottom:30px}
+.team-heading h2{font-size:clamp(32px,3.5vw,44px);margin-bottom:0;line-height:1.15}
+.school-badge{text-align:right;color:var(--muted);font-size:15px}
+.school-badge p{margin:10px 0 0}.class-badge{display:inline-block;border:1px solid #536044;border-radius:30px;padding:5px 15px;color:var(--gold);background:#fcd1160c;font-size:12px;letter-spacing:2px;font-weight:800}
+#developers .team{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0 0 28px}
+.developer-card{position:relative;overflow:hidden;min-width:0;background:linear-gradient(145deg,#173858,#10233e);border:1px solid #365675;border-radius:16px;padding:28px 22px 24px}
+.developer-card:after{content:"";position:absolute;left:22px;bottom:0;height:3px;width:40px;background:var(--gold);border-radius:3px 3px 0 0}
+.member-number{position:absolute;right:20px;top:18px;color:#afc3d9;font-size:12px;letter-spacing:2px;font-weight:500}
+.member-avatar{display:flex;align-items:center;justify-content:center;width:64px;height:64px;margin-bottom:26px;border:1px solid #8c8043;border-radius:18px;background:#fcd11612;color:#ffe16a;font-size:23px;letter-spacing:1px;font-weight:800}
+.developer-card h3{font-size:19px;line-height:1.4;letter-spacing:-.3px;margin:0 0 10px;font-weight:650}.developer-card h3 span{color:#fffdf5}
+.developer-card p{margin:0;color:var(--muted);font-size:13px;font-weight:400}
+.project-resources{display:flex;align-items:center;justify-content:space-between;gap:32px;background:#0c2038;border:1px solid #294b71;border-radius:16px;padding:28px}
+.project-links{min-width:0}.project-links h3{font-size:24px;margin:6px 0 10px}.project-links .note{margin:0}.project-links .note a{overflow-wrap:anywhere;text-underline-offset:4px}.project-links .actions{margin-top:20px;gap:10px}.project-links .button{font-size:13px;padding:10px 16px}
+.team-qr{display:flex;align-items:center;gap:18px;flex-shrink:0}.team-qr .qr{width:120px;height:120px}.team-qr p{font-weight:750;font-size:15px;margin:0 0 6px}.team-qr .note{line-height:1.5;display:block}
+@media(max-width:1000px){#developers .team{grid-template-columns:repeat(2,minmax(0,1fr))}.project-resources{align-items:flex-start;gap:24px}.team-qr{flex-direction:column;align-items:flex-start;gap:10px}}
+@media(max-width:600px){.team-heading{flex-direction:column;align-items:flex-start;gap:20px}.school-badge{text-align:left}.developer-card{padding:24px 16px 22px}.developer-card h3{font-size:17px}.member-avatar{width:54px;height:54px;font-size:20px;margin-bottom:22px}.member-number{right:14px;top:14px}.project-resources{flex-direction:column;padding:22px}.team-qr{flex-direction:row;align-items:center;width:100%;border-top:1px solid #294b71;padding-top:22px}.project-links .eyebrow{font-size:10px}.team-qr .qr{width:100px;height:100px}}
+@media(max-width:380px){#developers .team{grid-template-columns:1fr}.developer-card h3{font-size:20px}}
