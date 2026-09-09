@@ -7,17 +7,6 @@
   let pendingAction = null;
   let soundEnabled = false;
   let audioContext;
-  let installPrompt;
-
-  window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault();
-    installPrompt = event;
-    $('install-button').hidden = false;
-  });
-  window.addEventListener('appinstalled', () => {
-    installPrompt = null;
-    $('install-button').hidden = true;
-  });
 
   [...new Set(HulaanWords.map(w => w.category))].forEach(category => {
     $('category').add(new Option(category, category));
@@ -176,13 +165,6 @@
     action?.();
   });
   $('help-button').addEventListener('click', () => $('help').showModal());
-  $('install-button').addEventListener('click', async () => {
-    if (!installPrompt) return;
-    installPrompt.prompt();
-    await installPrompt.userChoice;
-    installPrompt = null;
-    $('install-button').hidden = true;
-  });
   $('sound').addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     $('sound').textContent = `Sound: ${soundEnabled ? 'on' : 'off'}`;

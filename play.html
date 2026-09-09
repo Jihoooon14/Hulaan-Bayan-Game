@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071426">
   <meta name="description" content="Play Hulaan Bayan in your browser. A Filipino word challenge for phones and computers, adapted from our Python game.">
-  <link rel="manifest" href="manifest.webmanifest">
   <title>Play Hulaan Bayan — A Filipino Word Challenge</title>
   <link rel="icon" href="assets/logo.png">
   <link rel="stylesheet" href="assets/play.css">
@@ -17,7 +16,7 @@
   <a class="skip" href="#main">Skip to game</a>
   <header class="site-header"><a class="brand" href="index.html"><img src="assets/logo.png" alt="" width="42" height="42"><span>HULAAN <b>BAYAN</b></span></a><a class="about-link" href="index.html">About the project <span aria-hidden="true">↗</span></a></header>
   <main id="main">
-    <div class="intro"><div><p class="eyebrow">Isang letra. Buong kultura.</p><h1>A Filipino Word Challenge</h1><p class="muted">Tap a letter. Discover a little more of the Philippines.</p></div><div class="intro-actions"><button class="quiet install-button" id="install-button" type="button" hidden>Install app <span aria-hidden="true">↓</span></button><button class="quiet" id="help-button" type="button">How to play <span aria-hidden="true">?</span></button></div></div>
+    <div class="intro"><div><p class="eyebrow">Isang letra. Buong kultura.</p><h1>A Filipino Word Challenge</h1><p class="muted">Tap a letter. Discover a little more of the Philippines.</p></div><button class="quiet" id="help-button" type="button">How to play <span aria-hidden="true">?</span></button></div>
     <form id="setup" class="setup panel">
       <div class="setup-title"><span class="sun" aria-hidden="true">☀</span><div><h2>Handa ka na ba?</h2><p>Choose your challenge and start playing.</p></div></div>
       <div class="setup-fields"><label>Category<select id="category"><option value="all">Lahat ng Kategorya</option></select></label><label>Difficulty<select id="difficulty"><option value="MADALI">Madali · 6 chances</option><option value="KATAMTAMAN" selected>Katamtaman · 5 chances</option><option value="MAHIRAP">Mahirap · 4 chances</option></select></label><button class="primary" type="submit">Simulan ang laro <span aria-hidden="true">→</span></button></div>
@@ -50,8 +49,5 @@
   </main>
   <dialog id="help" aria-labelledby="help-title"><div class="dialog-content"><p class="eyebrow">Paano maglaro</p><h2 id="help-title">Pick. Guess. Discover.</h2><ol><li>Choose one of six Filipino categories, or play them all.</li><li>Guess letters to reveal the word. Spaces and hyphens are already shown.</li><li>Madali gives 6 chances, Katamtaman 5, and Mahirap 4. A wrong letter uses one chance.</li><li>Correct guesses earn 10 points plus combo bonuses. Solve a word for 50 more points.</li><li>Use one hint per word for 5 points. Scores never go below zero.</li></ol><p class="muted">Bagong salita skips a word. Changing your challenge starts a new score. Scores last until you reload or leave this page.</p><form method="dialog"><button class="primary">Tara, laro!</button></form></div></dialog>
   <dialog id="confirm" aria-labelledby="confirm-title"><div class="dialog-content"><h2 id="confirm-title"></h2><p id="confirm-copy" class="muted"></p><div class="dialog-actions"><button id="cancel-change" class="secondary" type="button">Keep playing</button><button id="confirm-change" class="primary" type="button">Continue</button></div></div></dialog>
-  <script>
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
-  </script>
 </body>
 </html>
