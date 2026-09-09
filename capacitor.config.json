@@ -1,0 +1,8 @@
+{
+  "appId": "io.github.jihoooon14.hulaanbayan",
+  "appName": "Hulaan Bayan",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}

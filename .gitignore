@@ -2,3 +2,26 @@
 .preview-tools/
 .previews/
 __pycache__/
+
+# --- Android APK build (see ANDROID-BUILD.md) ---
+
+# JS dependencies for the Capacitor build.
+node_modules/
+
+# Generated native project. `npx cap add android` recreates it on every build,
+# so anything hand-edited here is discarded. Never commit it.
+/android/
+
+# Staged web assets, assembled by scripts/stage-www.mjs.
+/www/
+
+# Containerised build output.
+/dist/
+
+# Release signing material — self-managed keystore. NEVER commit these.
+# Losing them is unrecoverable; see ANDROID-BUILD.md "Keystore".
+/secrets/
+*.keystore
+*.jks
+*.p12
+keystore.properties

@@ -9,6 +9,7 @@ The browser edition adapts the same vocabulary and rules to JavaScript for phone
 - Open `poster.html` for the responsive poster preview, or print `downloads/Hulaan-Bayan-Poster.pdf` at 100% on 8 × 12-inch paper.
 - Run `game/Hulaan-Bayan-Game/Start-Game.cmd` on Windows with Python 3 and Tkinter installed.
 - The downloadable game is packaged in `downloads/Hulaan-Bayan-Game.zip`. Its editable source and bundled assets are in `game/Hulaan-Bayan-Game/`.
+- Build a signed Android APK of the browser edition with `just release`; see `ANDROID-BUILD.md`.
 
 Project address: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 
@@ -19,6 +20,19 @@ Direct play / poster QR address: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 `assets/words.js` contains the 35 words and hints copied from the Python game's `WORD_DATA`. `assets/game-core.js` implements the same category pools, difficulties, scoring, hints, and level progression. `assets/play.js` and `assets/play.css` provide the touch and keyboard interface. Scores stay in memory for the current page session. The browser version has optional sound effects; the Python version retains its background music.
 
 Run the rule checks with `node --test tests/game-core.test.cjs`. Serve or publish the repository as static files; `play.html` works under the GitHub Pages project path. Publish the updated QR SVG and both poster exports together with the browser files.
+
+## Android app
+
+The browser edition is packaged for Android with Capacitor, wrapped in a native shell that runs the whole game offline from files bundled inside the APK. The build runs entirely in Docker, so no Android SDK, Android Studio, or JDK is needed on your machine:
+
+```
+just keystore     # once, ever
+just release      # -> dist/hulaan-bayan-release.apk
+```
+
+`ANDROID-BUILD.md` covers the build, installing on a phone, and keystore handling.
+
+The Python desktop edition cannot be compiled to an APK. Tkinter has no Android runtime — no toolchain ships it — so the Android app wraps the JavaScript port instead. The Python version is unchanged and remains the desktop game.
 
 ## Project description and desktop instructions
 

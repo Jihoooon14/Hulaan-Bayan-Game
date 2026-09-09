@@ -1,0 +1,17 @@
+{
+  "name": "hulaan-bayan-android",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Android packaging for the Hulaan Bayan browser game. The game itself lives in the repository root; this only wraps it. See ANDROID-BUILD.md.",
+  "scripts": {
+    "stage": "node scripts/stage-www.mjs",
+    "prepare:android": "npx cap add android && node scripts/apply-android-config.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.1",
+    "@capacitor/core": "8.5.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.1"
+  }
+}
