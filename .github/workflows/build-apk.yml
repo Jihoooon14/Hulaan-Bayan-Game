@@ -1,0 +1,169 @@
+name: Build Hulaan Bayan Android APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Create Android web bundle
+        shell: bash
+        run: |
+          rm -rf www android
+          mkdir -p www
+
+          # The browser game becomes the Android application's home page.
+          cp play.html www/index.html
+          cp -R assets www/assets
+
+      - name: Create Capacitor project
+        shell: bash
+        run: |
+          cat > package.json <<'EOF'
+          {
+            "name": "hulaan-bayan-android",
+            "version": "1.0.0",
+            "private": true,
+            "dependencies": {
+              "@capacitor/android": "^8.0.0",
+              "@capacitor/core": "^8.0.0"
+            },
+            "devDependencies": {
+              "@capacitor/cli": "^8.0.0"
+            }
+          }
+          EOF
+
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.group5.hulaanbayan",
+            "appName": "Hulaan Bayan",
+            "webDir": "www"
+          }
+          EOF
+
+          npm install
+          npx cap add android
+          npx cap copy android
+
+      - name: Force landscape orientation
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          manifest = Path("android/app/src/main/AndroidManifest.xml")
+          text = manifest.read_text(encoding="utf-8")
+
+          marker = 'android:name=".MainActivity"'
+          orientation = 'android:screenOrientation="landscape"'
+
+          if orientation not in text:
+              text = text.replace(
+                  marker,
+                  marker + '\n            ' + orientation,
+                  1
+              )
+
+          manifest.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Use Hulaan Bayan logo as launcher icon
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+
+          ICON="assets/logo.png"
+
+          if [ -f "$ICON" ]; then
+            for item in \
+              "mipmap-mdpi:48" \
+              "mipmap-hdpi:72" \
+              "mipmap-xhdpi:96" \
+              "mipmap-xxhdpi:144" \
+              "mipmap-xxxhdpi:192"
+            do
+              folder="${item%%:*}"
+              size="${item##*:}"
+              mkdir -p "android/app/src/main/res/$folder"
+              convert "$ICON" -resize "${size}x${size}" \
+                "android/app/src/main/res/$folder/ic_launcher.png"
+              convert "$ICON" -resize "${size}x${size}" \
+                "android/app/src/main/res/$folder/ic_launcher_round.png"
+              convert "$ICON" -resize "${size}x${size}" \
+                "android/app/src/main/res/$folder/ic_launcher_foreground.png"
+            done
+          fi
+
+      - name: Build APK
+        shell: bash
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Prepare final APK
+        shell: bash
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk \
+            Hulaan-Bayan-Android.apk
+
+      - name: Upload APK as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Hulaan-Bayan-Android
+          path: Hulaan-Bayan-Android.apk
+          if-no-files-found: error
+
+      - name: Publish/update Android download release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view android-latest >/dev/null 2>&1; then
+            gh release upload android-latest Hulaan-Bayan-Android.apk --clobber
+          else
+            gh release create android-latest \
+              Hulaan-Bayan-Android.apk \
+              --title "Hulaan Bayan Android" \
+              --notes "Latest installable Android APK for Hulaan Bayan."
+          fi
+
+      - name: Add Android APK button to website
+        shell: bash
+        run: |
+          python3 tools/add-apk-download.py
+
+      - name: Commit website APK button
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Website already contains the Android APK button."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Add Android APK download"
+          git push
