@@ -120,6 +120,17 @@ RUN printf 'y\n%.0s' $(seq 1 50) | sdkmanager --licenses > /dev/null \
 FROM sdk AS deps
 WORKDIR /workspace
 
+# ImageMagick renders the launcher icons in the `prepared` stage. Installed here
+# rather than in `base` so that adding it cannot invalidate the ~2.5 GB sdk layer.
+#
+# Noble ships ImageMagick 6, which provides `convert` and `identify` but no
+# unified `magick` binary — that arrived in ImageMagick 7. scripts/generate-icons.sh
+# resolves whichever is present, so it runs here and on a developer machine alike.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends imagemagick \
+ && rm -rf /var/lib/apt/lists/* \
+ && convert -version | head -1
+
 # bun ships bunx as a symlink to itself; installing the bare binary skips it.
 # Added here rather than in `base` so it cannot invalidate the ~2.5 GB sdk layer.
 RUN ln -sf /usr/local/bin/bun /usr/local/bin/bunx
@@ -155,7 +166,8 @@ FROM staged AS prepared
 COPY capacitor.config.json ./
 
 RUN npx cap add android \
- && node scripts/apply-android-config.mjs
+ && node scripts/apply-android-config.mjs \
+ && ./scripts/generate-icons.sh
 
 # Verify the config script actually took. Cheap here; expensive to discover
 # after a full release build.
@@ -168,6 +180,19 @@ RUN test -f android/app/hulaan-bayan.gradle \
 RUN test -f android/app/src/main/assets/public/index.html \
  && grep -q 'id="keyboard"' android/app/src/main/assets/public/index.html \
  || { echo "FATAL: the APK's launch page is not the game"; exit 1; }
+
+# The background music must actually be in the payload, and must be the compressed
+# track rather than the 1 MB WAV the staging step drops.
+RUN test -f android/app/src/main/assets/public/assets/bayan-theme.m4a \
+ && test ! -f android/app/src/main/assets/public/assets/bayan-theme.wav \
+ && grep -q 'id="music-track"' android/app/src/main/assets/public/index.html \
+ || { echo "FATAL: background music is missing from the APK payload"; exit 1; }
+
+# `npx cap add android` restores Capacitor's default Ionic logo on every build, so
+# a silently skipped icon step would ship that instead of the project logo.
+RUN test -s android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png \
+ && grep -q '0B1F3A' android/app/src/main/res/values/ic_launcher_background.xml \
+ || { echo "FATAL: launcher icons were not applied"; exit 1; }
 
 # -XX:-UsePerfData is not a tuning knob, it is a crash fix. The JVM mmaps a
 # perf-counter file under /tmp/hsperfdata_*; when the filesystem behind it runs

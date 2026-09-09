@@ -5,8 +5,20 @@
   const game = new HulaanCore.Game(HulaanWords);
   const keys = new Map();
   let pendingAction = null;
-  let soundEnabled = false;
-  let audioContext;
+
+  /* Background music and effects live in game-audio.js, which carries the
+     original Python melodies and the autoplay-policy handling. */
+  const audio = new HulaanAudio(
+    $('music-track'),
+    state => {
+      $('sound').textContent = `Tunog: ${state.sound ? 'on' : 'off'}`;
+      $('sound').setAttribute('aria-pressed', String(state.sound));
+      const playing = state.music || state.pending;
+      $('music').textContent = `Musika: ${state.pending ? '…' : state.music ? 'on' : 'off'}`;
+      $('music').setAttribute('aria-pressed', String(playing));
+    },
+    notice => { $('audio-notice').textContent = notice; }
+  );
 
   [...new Set(HulaanWords.map(w => w.category))].forEach(category => {
     $('category').add(new Option(category, category));
@@ -26,23 +38,6 @@
     }
     $('keyboard').append(container);
   });
-
-  function tone(correct) {
-    if (!soundEnabled) return;
-    try {
-      audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
-      const resume = audioContext.resume();
-      resume.catch(() => {});
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      oscillator.frequency.value = correct ? 660 : 220;
-      gain.gain.setValueAtTime(.07, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(.001, audioContext.currentTime + .14);
-      oscillator.connect(gain).connect(audioContext.destination);
-      oscillator.start();
-      oscillator.stop(audioContext.currentTime + .15);
-    } catch { /* A browser without audio support can still play the game. */ }
-  }
 
   function message(text, type = '') {
     $('message').textContent = text;
@@ -112,7 +107,9 @@
     if (result.type === 'inactive') return;
     if (result.type === 'repeat') { message(`Nahulaan mo na ang ${result.letter.toUpperCase()}. Try another letter.`); return; }
     if (result.type === 'invalid') { message('Choose a letter from A to Z.'); return; }
-    tone(result.type === 'correct');
+    if (game.status === 'won') audio.effect('victory');
+    else if (game.status === 'lost') audio.effect('loss');
+    else audio.effect(result.type === 'correct' ? 'correct' : 'wrong');
     render();
     if (game.status === 'won') message('MAHUSAY! You solved the word. +50 bonus points!', 'correct');
     else if (game.status === 'lost') message(`No chances left. The word was ${game.current.word.toUpperCase()}.`, 'wrong');
@@ -137,6 +134,7 @@
   }
   $('setup').addEventListener('submit', event => {
     event.preventDefault();
+    audio.activate();
     game.start($('category').value, $('difficulty').value);
     $('setup').hidden = true;
     $('game').hidden = false;
@@ -146,10 +144,11 @@
   });
   $('hint').addEventListener('click', () => {
     if (game.hint() === null) return;
+    audio.effect('hint');
     render();
     message(`Pahiwatig: ${game.current.hint}`);
   });
-  $('next-round').addEventListener('click', newRound);
+  $('next-round').addEventListener('click', () => { audio.effect('click'); newRound(); });
   $('skip').addEventListener('click', () => confirmAction('Skip this word?', 'Your points stay, but this word and your current combo will reset.', newRound));
   $('settings').addEventListener('click', () => confirmAction('Choose a new challenge?', 'Starting a new challenge resets your points, wins, and losses.', () => {
     $('game').hidden = true;
@@ -164,12 +163,15 @@
     $('confirm').close();
     action?.();
   });
-  $('help-button').addEventListener('click', () => $('help').showModal());
-  $('sound').addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    $('sound').textContent = `Sound: ${soundEnabled ? 'on' : 'off'}`;
-    $('sound').setAttribute('aria-pressed', String(soundEnabled));
-    tone(true);
+  $('help-button').addEventListener('click', () => { audio.effect('click'); $('help').showModal(); });
+  $('sound').addEventListener('click', () => audio.toggleSound());
+  $('music').addEventListener('click', () => audio.toggleMusic());
+
+  /* Music must not keep playing once the game is backgrounded — on Android the
+     app stays alive behind the launcher, so without this the theme plays on. */
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) audio.suspend();
+    else audio.resume();
   });
   document.addEventListener('keydown', event => {
     if (event.ctrlKey || event.altKey || event.metaKey || event.isComposing || event.repeat) return;

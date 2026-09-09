@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="assets/play.css">
   <script src="assets/words.js" defer></script>
   <script src="assets/game-core.js" defer></script>
+  <script src="assets/game-audio.js" defer></script>
   <script src="assets/play.js" defer></script>
 </head>
 <body>
@@ -43,7 +44,8 @@
           <div class="game-actions"><button id="hint" class="secondary" type="button">Pahiwatig <span>−5 pts</span></button><button id="skip" class="secondary" type="button">Bagong salita</button><button id="settings" class="quiet" type="button">Change challenge</button></div>
         </div>
       </div>
-      <div class="game-footer"><p>Tama +10 &amp; combo bonus · Mali −5 · Panalo +50</p><button id="sound" class="quiet" aria-pressed="false" type="button">Sound: off</button></div>
+      <div class="game-footer"><p>Tama +10 &amp; combo bonus · Mali −5 · Panalo +50</p><div class="audio-controls"><p id="audio-notice" class="audio-notice" role="status" aria-live="polite"></p><button id="music" class="quiet" aria-pressed="false" type="button">Musika: off</button><button id="sound" class="quiet" aria-pressed="false" type="button">Tunog: off</button></div></div>
+      <audio id="music-track" src="assets/bayan-theme.m4a" preload="none"></audio>
     </section>
     <footer class="project-footer"><p>A browser adaptation of our Filipino-themed Python game.</p><a href="downloads/Hulaan-Bayan-Game.zip" download>Download Python version ↓</a><a href="index.html#developers">Meet the developers</a></footer>
   </main>

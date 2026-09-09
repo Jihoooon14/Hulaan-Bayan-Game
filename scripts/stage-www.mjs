@@ -32,12 +32,15 @@ const WWW = join(ROOT, 'www');
 const PAGES_BASE = 'https://jihoooon14.github.io/Hulaan-Bayan-Game';
 
 /**
- * Assets deliberately left out. Both are unreachable from any page in the
- * repository: game-audio.js is referenced by no HTML file, and bayan-theme.wav
- * is loaded only by game-audio.js. The Python desktop game keeps its own copy
- * of the audio under game/Hulaan-Bayan-Game/assets/, which this never touches.
+ * Assets deliberately left out.
+ *
+ * bayan-theme.wav is the uncompressed 24-second theme: mono 22.05 kHz PCM, 1.01 MB
+ * for audio that AAC carries in 179 KB. play.html loads bayan-theme.m4a instead,
+ * so the WAV is unreachable from any page. It stays in the repository because the
+ * Python desktop game needs PCM for winsound — that copy lives under
+ * game/Hulaan-Bayan-Game/assets/ and this never touches it.
  */
-const EXCLUDED_ASSETS = new Set(['game-audio.js', 'bayan-theme.wav']);
+const EXCLUDED_ASSETS = new Set(['bayan-theme.wav']);
 
 /**
  * play.html becomes the launch page, so the landing page has to move aside.

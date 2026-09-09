@@ -89,14 +89,36 @@ the website to play a game they already have installed.
 
 | Excluded | Size | Reason |
 |---|---|---|
-| `assets/game-audio.js` | 5.4 KB | Dead. No HTML file in the repository references it. |
-| `assets/bayan-theme.wav` | 1.1 MB | Dead on web. Only `game-audio.js` would load it, and nothing loads that. The Python game's own copy under `game/Hulaan-Bayan-Game/assets/` is untouched. |
+| `assets/bayan-theme.wav` | 1.01 MB | Superseded by `bayan-theme.m4a` (§3.4). Kept in the repository because the Python desktop game needs PCM for `winsound`, but no page loads it. |
 | `downloads/` | 9.2 MB | Cannot work as relative links (§3.2). `Hulaan-Bayan-Website.zip` is not linked from anywhere at all. |
 
-Bundled payload: **~1.26 MB**, down from ~11.5 MB.
+Bundled payload: **~1.44 MB**, down from ~11.5 MB.
 
-Sound still works. The game synthesises its effects in-process through the Web
-Audio API (`assets/play.js:33`); it never loads an audio file.
+### 3.4 Sound and background music
+
+Both work fully offline; nothing is streamed.
+
+`assets/game-audio.js` carries the melodies transcribed from the Python edition's
+`winsound` sequences — click, correct, wrong, victory, loss and hint — and
+synthesises them through the Web Audio API, so effects cost no bundle size at
+all. It also drives the looping background theme and handles the parts that are
+easy to get wrong: browsers refuse to start audio without a user gesture, so
+music begins on the first real tap (starting a round) rather than on page load,
+and a `visibilitychange` handler stops it when the app is backgrounded — without
+that, the theme keeps playing behind the launcher on Android.
+
+The theme ships as **`assets/bayan-theme.m4a`**, AAC 64 kbps mono, 179 KB. The
+source `bayan-theme.wav` is mono 22.05 kHz PCM and 1.01 MB for the same 24
+seconds, so shipping the WAV would have cost more than the rest of the app put
+together. Regenerate it with:
+
+```bash
+ffmpeg -i assets/bayan-theme.wav -c:a aac -b:a 64k -ac 1 -movflags +faststart \
+  assets/bayan-theme.m4a
+```
+
+`MUSIKA` and `TUNOG` toggle music and effects independently and remember the
+choice in `localStorage`, matching the Python edition's behaviour.
 
 ---
 
@@ -154,8 +176,15 @@ of which fails it:
    APK. The build fails if the signer is `CN=Android Debug`, and equally if
    `apksigner` reports no signer certificate.
 
-A fourth check asserts that the APK's launch page is the game, by grepping the
-bundled `assets/public/index.html` for the keyboard element.
+Three further checks in the same stage assert that the packaged payload is the
+one intended, since each of these failures would otherwise ship silently:
+
+- the launch page is the game, by grepping the bundled `assets/public/index.html`
+  for the keyboard element;
+- the background music is present and is the compressed track, not the WAV;
+- the launcher icons were applied. This one matters because
+  `npx cap add android` restores Capacitor's default Ionic logo on every single
+  build, so a skipped icon step ships that instead of the project logo.
 
 To re-check the artifacts later:
 
@@ -365,10 +394,10 @@ is out of scope here — this setup produces a sideloadable APK, not an `.aab`.
 
 ## 10. Known gaps
 
-- **App icon is Capacitor's default.** `assets/logo.png` exists but is a 1.2 MB
-  PNG with no adaptive-icon foreground/background split. Generating a proper
-  icon set (`mipmap-*dpi`, adaptive foreground/background, monochrome) is
-  separate work.
+- **No monochrome icon.** `scripts/generate-icons.sh` produces the legacy, round
+  and adaptive-foreground sets plus the background colour, but not the
+  Android 13+ themed-icon monochrome layer. Launchers with themed icons enabled
+  fall back to the normal icon, which is correct, just not themed.
 - **No `.aab`.** `assembleRelease` produces an APK for sideloading. Play Store
   submission would need `bundleRelease` and a different signing posture (§9).
 - **Not verified on a physical device.** The build and its signature are verified

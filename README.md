@@ -17,9 +17,9 @@ Direct play / poster QR address: https://jihoooon14.github.io/Hulaan-Bayan-Game/
 
 ## Browser development
 
-`assets/words.js` contains the 35 words and hints copied from the Python game's `WORD_DATA`. `assets/game-core.js` implements the same category pools, difficulties, scoring, hints, and level progression. `assets/play.js` and `assets/play.css` provide the touch and keyboard interface. Scores stay in memory for the current page session. The browser version has optional sound effects; the Python version retains its background music.
+`assets/words.js` contains the 35 words and hints copied from the Python game's `WORD_DATA`. `assets/game-core.js` implements the same category pools, difficulties, scoring, hints, and level progression. `assets/play.js` and `assets/play.css` provide the touch and keyboard interface. Scores stay in memory for the current page session. `assets/game-audio.js` plays the looping background theme (`assets/bayan-theme.m4a`) and synthesises the same effect melodies as the Python edition; MUSIKA and TUNOG toggle them independently and the choice is remembered in `localStorage`. Music starts on your first tap, because browsers block audio before a user gesture.
 
-Run the rule checks with `node --test tests/game-core.test.cjs`. Serve or publish the repository as static files; `play.html` works under the GitHub Pages project path. Publish the updated QR SVG and both poster exports together with the browser files.
+Run the checks with `node --test tests/game-core.test.cjs tests/game-audio.test.cjs` — the first covers the game rules, the second the music and sound controller. Serve or publish the repository as static files; `play.html` works under the GitHub Pages project path. Publish the updated QR SVG and both poster exports together with the browser files.
 
 ## Android app
 
