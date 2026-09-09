@@ -1,8 +1,8 @@
 # Publish the browser game
 
-Target repository: https://github.com/ashleyglitzjaranilla/Hulaan-Bayan-Game
+Target repository: https://github.com/Jihoooon14/Hulaan-Bayan-Game
 
-Play address: https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/play.html
+Play address: https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html
 
 The browser game runs as static HTML, CSS, and JavaScript. No server, build service, or Python installation is needed to play it.
 
@@ -19,8 +19,8 @@ The website archive includes the updated QR SVG, printable PDF/PNG, and the Pyth
 
 ## Publish through this workspace
 
-The workspace Git remote points to `Jihoooon14/Hulaan-Bayan-Game`, a different repository. An isolated checkout of the intended repository was prepared at `.previews/publish-browser`.
+The workspace remote is `https://github.com/Jihoooon14/Hulaan-Bayan-Game`.
+Publish to its existing `main` branch and retain the existing GitHub Pages configuration.
+The QR points directly to `https://jihoooon14.github.io/Hulaan-Bayan-Game/play.html`.
 
-The current GitHub credentials identify `Jihoooon14`. A publication permission check against the target repository returned HTTP 403. Sign in with an authorized account, or grant `Jihoooon14` collaborator access and accept the invitation, before pushing to the intended repository. No changes have been pushed to either repository.
-
-The latest edits and the browser game are available locally regardless of publishing access. Open `play.html` for a local preview.
+Open `play.html` for a local preview before publishing.
