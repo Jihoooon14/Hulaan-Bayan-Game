@@ -16,7 +16,9 @@ Install Python 3 with Tkinter support, extract the entire ZIP, then run:
 On Windows, you can also double-click Start-Game.cmd.
 No external pip packages are required by the game.
 On Linux, your distribution may require a separate python3-tk package.
-The desktop game does not run inside a web browser.
+This Python desktop edition does not run inside a web browser.
+A browser adaptation is available at:
+https://ashleyglitzjaranilla.github.io/Hulaan-Bayan-Game/play.html
 Recommended display: 1280 x 800 or larger, at standard display scaling.
 
 HOW TO PLAY

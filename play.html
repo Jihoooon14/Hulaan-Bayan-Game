@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="Play Hulaan Bayan in your browser. A Filipino word challenge for phones and computers, adapted from our Python game.">
+  <title>Play Hulaan Bayan — A Filipino Word Challenge</title>
+  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="assets/play.css">
+  <script src="assets/words.js" defer></script>
+  <script src="assets/game-core.js" defer></script>
+  <script src="assets/play.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to game</a>
+  <header class="site-header"><a class="brand" href="index.html"><img src="assets/logo.png" alt="" width="42" height="42"><span>HULAAN <b>BAYAN</b></span></a><a class="about-link" href="index.html">About the project <span aria-hidden="true">↗</span></a></header>
+  <main id="main">
+    <div class="intro"><div><p class="eyebrow">Isang letra. Buong kultura.</p><h1>A Filipino Word Challenge</h1><p class="muted">Tap a letter. Discover a little more of the Philippines.</p></div><button class="quiet" id="help-button" type="button">How to play <span aria-hidden="true">?</span></button></div>
+    <form id="setup" class="setup panel">
+      <div class="setup-title"><span class="sun" aria-hidden="true">☀</span><div><h2>Handa ka na ba?</h2><p>Choose your challenge and start playing.</p></div></div>
+      <div class="setup-fields"><label>Category<select id="category"><option value="all">Lahat ng Kategorya</option></select></label><label>Difficulty<select id="difficulty"><option value="MADALI">Madali · 6 chances</option><option value="KATAMTAMAN" selected>Katamtaman · 5 chances</option><option value="MAHIRAP">Mahirap · 4 chances</option></select></label><button class="primary" type="submit">Simulan ang laro <span aria-hidden="true">→</span></button></div>
+      <p class="setup-note">Free to play · No download or account needed</p>
+    </form>
+    <noscript><p class="panel">Please enable JavaScript to play in your browser, or <a href="downloads/Hulaan-Bayan-Game.zip">download the Python desktop game</a>.</p></noscript>
+    <section id="game" hidden aria-label="Word guessing game">
+      <div class="scoreboard"><div><span>Puntos</span><strong id="score">0</strong></div><div><span>Panalo</span><strong id="wins">0</strong></div><div><span>Talo</span><strong id="losses">0</strong></div><div><span>Best combo</span><strong id="best-combo">×0</strong></div></div>
+      <div class="game-layout">
+        <aside class="status-panel panel"><div class="status-title"><h2>Kalagayan</h2><span id="difficulty-badge" class="badge"></span></div>
+          <svg class="hangman" viewBox="0 0 320 320" role="img" aria-labelledby="drawing-title"><title id="drawing-title">Bamboo scaffold. No wrong guesses.</title>
+            <g fill="none" stroke="#c39b53" stroke-width="7" stroke-linecap="round"><path d="M48 290H275M91 290V49H232V76M91 104L145 49"/><path d="M85 156h12M85 220h12M150 43v12" stroke="#e2c184" stroke-width="3"/></g>
+            <g stroke="#fcd116" stroke-width="3"><circle cx="91" cy="48" r="17" fill="#fcd116"/><path d="M91 18V8M91 88V78M61 48H51M131 48H121M69 26L62 19M113 26L120 19M69 70L62 77M113 70L120 77"/></g>
+            <g fill="#fffdf5"><path d="m53 112 3 8h9l-7 5 3 9-8-5-7 5 3-9-7-5h9z"/><path d="m130 126 3 8h9l-7 5 3 9-8-5-7 5 3-9-7-5h9z"/></g>
+            <g fill="none" stroke="#fffdf5" stroke-width="6" stroke-linecap="round"><circle data-part cx="232" cy="105" r="26" hidden/><path data-part d="M232 131V204" hidden/><path data-part d="M232 151L199 181" hidden/><path data-part d="M232 151L265 181" hidden/><path data-part d="M232 204L203 249" hidden/><path data-part d="M232 204L261 249" hidden/></g>
+          </svg>
+          <div class="lives"><div><span>Pagkakataon</span><strong id="remaining"></strong></div><progress id="life-bar" max="5" value="5" aria-label="Remaining chances"></progress><div class="round-meta"><span>Antas <b id="level">1</b></span><span>Combo <b id="combo">×0</b></span></div></div>
+        </aside>
+        <div class="word-panel panel"><p class="eyebrow">Kategorya</p><h2 id="current-category"></h2><div id="word" class="word" role="group" aria-label="Hidden word"></div><p id="message" class="message" role="status" aria-live="polite" aria-atomic="true"></p>
+          <div id="result" class="result" hidden><h3 id="result-title"></h3><p id="result-copy"></p><button id="next-round" class="primary" type="button">Susunod na salita →</button></div>
+          <div id="keyboard" class="keyboard" role="group" aria-label="Letter keyboard"></div>
+          <p class="keyboard-note">Tap a letter above or use your keyboard.</p>
+          <div id="hint-panel" class="hint-panel" hidden><h3>Pahiwatig</h3><p id="hint-text"></p></div>
+          <div class="game-actions"><button id="hint" class="secondary" type="button">Pahiwatig <span>−5 pts</span></button><button id="skip" class="secondary" type="button">Bagong salita</button><button id="settings" class="quiet" type="button">Change challenge</button></div>
+        </div>
+      </div>
+      <div class="game-footer"><p>Tama +10 &amp; combo bonus · Mali −5 · Panalo +50</p><button id="sound" class="quiet" aria-pressed="false" type="button">Sound: off</button></div>
+    </section>
+    <footer class="project-footer"><p>A browser adaptation of our Filipino-themed Python game.</p><a href="downloads/Hulaan-Bayan-Game.zip" download>Download Python version ↓</a><a href="index.html#developers">Meet the developers</a></footer>
+  </main>
+  <dialog id="help" aria-labelledby="help-title"><div class="dialog-content"><p class="eyebrow">Paano maglaro</p><h2 id="help-title">Pick. Guess. Discover.</h2><ol><li>Choose one of six Filipino categories, or play them all.</li><li>Guess letters to reveal the word. Spaces and hyphens are already shown.</li><li>Madali gives 6 chances, Katamtaman 5, and Mahirap 4. A wrong letter uses one chance.</li><li>Correct guesses earn 10 points plus combo bonuses. Solve a word for 50 more points.</li><li>Use one hint per word for 5 points. Scores never go below zero.</li></ol><p class="muted">Bagong salita skips a word. Changing your challenge starts a new score. Scores last until you reload or leave this page.</p><form method="dialog"><button class="primary">Tara, laro!</button></form></div></dialog>
+  <dialog id="confirm" aria-labelledby="confirm-title"><div class="dialog-content"><h2 id="confirm-title"></h2><p id="confirm-copy" class="muted"></p><div class="dialog-actions"><button id="cancel-change" class="secondary" type="button">Keep playing</button><button id="confirm-change" class="primary" type="button">Continue</button></div></div></dialog>
+</body>
+</html>
